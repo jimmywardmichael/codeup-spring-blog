@@ -1,9 +1,6 @@
 package com.codeup.codeupspringblog;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 record Message(String message){}
 @Controller
@@ -23,6 +20,11 @@ public class HelloController {
     @ResponseBody
     public String color(){
         return "Royal Blue";
+    }
+    @GetMapping("/hello/{firstName}/{lastName}")
+    @ResponseBody
+    public String sayHello(@PathVariable String firstName, @PathVariable String lastName){
+        return "<h1>Hello " + firstName + " " + lastName + "</h1>";
     }
 }
 
