@@ -1,4 +1,4 @@
-package com.codeup.codeupspringblog.Controllers;
+package com.codeup.codeupspringblog.controllers;
 
 import jakarta.persistence.*;
 
