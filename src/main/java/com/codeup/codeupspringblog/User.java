@@ -1,7 +1,8 @@
 package com.codeup.codeupspringblog;
 
 import jakarta.persistence.*;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 @Entity
 @Table(name = "users")
 public class User {
