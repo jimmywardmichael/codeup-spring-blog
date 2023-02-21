@@ -1,4 +1,4 @@
-package com.codeup.codeupspringblog;
+package com.codeup.codeupspringblog.Controllers;
 
 import jakarta.persistence.*;
 import org.springframework.stereotype.Controller;
