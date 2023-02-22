@@ -53,15 +53,14 @@ public class AdController {
     }
 
     @GetMapping("/ads/create")
-    public String adCreateForm(){
+    public String adCreateForm(Model model){
+       model.addAttribute("newAd", new Ad());
         return "ads/create";
     }
 
     @PostMapping(path = "/ads/create")
-    public String adCreateSubmit(@RequestParam String title, @RequestParam String description){
-        Ad newAd = new Ad(title, description);
-
-        adDao.save(newAd);
+    public String adCreateSubmit(@ModelAttribute Ad ad){
+        adDao.save(ad);
 
         return "redirect:/ads";
     }

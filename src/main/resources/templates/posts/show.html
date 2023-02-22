@@ -10,8 +10,10 @@
         <div class="col">
             <h1 th:text="${post.title}"></h1>
             <p th:text="${post.body}"></p>
+            <small th:text="${'User email: ' + post.user.email}"></small>
         </div>
     </div>
 </div>
+
 </body>
 </html>
