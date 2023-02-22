@@ -12,7 +12,9 @@ public class Post {
     private String title;
     @Column(columnDefinition = "TEXT NOT NULL")
     private String body;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     public Post(){};
 
     public Post(String title, String body){
@@ -25,6 +27,10 @@ public class Post {
         this.title = title;
         this.body = body;
     }
+    public Post(String title) {
+        this.title = title;
+    }
+
 
     public long getId() {
         return id;

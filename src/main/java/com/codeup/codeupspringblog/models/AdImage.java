@@ -17,6 +17,11 @@ public class AdImage {
 
     public AdImage(){}
 
+    public AdImage(String imageURL, Ad ad) {
+        this.imageURL = imageURL;
+        this.ad = ad;
+    }
+
     public AdImage(String imageURL) {
         this.imageURL = imageURL;
     }

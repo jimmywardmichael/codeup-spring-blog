@@ -26,7 +26,8 @@ public class Ad {
     @JoinTable(
             name = "ads_categories",
             joinColumns = {@JoinColumn(name = "ad_id")},
-            inverseJoinColumns = {@JoinColumn(name = "category_id")})
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
     private List<AdCategory> categories;
 
     public Ad(){};
@@ -58,14 +59,6 @@ public class Ad {
         this.id = id;
     }
 
-    public List<AdCategory> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<AdCategory> categories) {
-        this.categories = categories;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -80,5 +73,24 @@ public class Ad {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<AdCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<AdCategory> categories) {
+        this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Ad{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", images=" + images +
+                ", categories=" + categories +
+                '}';
     }
 }

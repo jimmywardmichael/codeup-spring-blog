@@ -4,11 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-
 @Entity
 @Table(name = "categories")
 public class AdCategory {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,6 +15,13 @@ public class AdCategory {
 
     @ManyToMany(mappedBy = "categories")
     private List<Ad> ads;
+
+    public AdCategory(){};
+
+    public AdCategory(String name, List<Ad> ads) {
+        this.name = name;
+        this.ads = ads;
+    }
 
     public long getId() {
         return id;
@@ -42,3 +47,4 @@ public class AdCategory {
         this.ads = ads;
     }
 }
+
