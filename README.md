@@ -10,6 +10,8 @@ Technologies Involved:
     - Tomcat
     - Spring JPA Data
     - Spring Web
+    - Spring Security
+- ThymeLeaf
 - Java 17
 - MySQL 8
 - IntelliJ

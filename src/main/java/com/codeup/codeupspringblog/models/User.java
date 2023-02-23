@@ -21,6 +21,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Ad> ads;
 
+
     public User() {};
 
     public User(String username, String password, String email) {
@@ -28,6 +29,13 @@ public class User {
         this.password = password;
         this.email = email;
     }
+
+        public User(User copy) {
+            id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+            email = copy.email;
+            username = copy.username;
+            password = copy.password;
+        }
     public List<Ad> getAds() {
         return ads;
     }
