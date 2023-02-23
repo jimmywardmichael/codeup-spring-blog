@@ -9,16 +9,11 @@ import java.io.IOException;
 @Service("EmailService")
 public class EmailService {
 
-    private final EmailService Email;
     @Value("${spring.sendgrid.api-key}")
     private String apiKey;
 
     @Value("${RANDOM_API_KEY}")
     private String key2;
-
-    public EmailService(EmailService Email) {
-        this.Email = Email;
-    }
 
     public String sendTextEmail(Post post) {
         Email from = new Email("jearredondo13@gmail.com");
