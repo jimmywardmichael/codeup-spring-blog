@@ -18,11 +18,18 @@ public class User {
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private List<Ad> ads;
 
-
     public User() {};
+
+    public User(User copy) {
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
+    }
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -30,15 +37,14 @@ public class User {
         this.email = email;
     }
 
-        public User(User copy) {
-            id = copy.id; // This line is SUPER important! Many things won't work if it's absent
-            email = copy.email;
-            username = copy.username;
-            password = copy.password;
-        }
     public List<Ad> getAds() {
         return ads;
     }
+
+    public void setAds(List<Ad> ads) {
+        this.ads = ads;
+    }
+
     public long getId() {
         return id;
     }
