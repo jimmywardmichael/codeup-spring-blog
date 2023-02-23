@@ -18,6 +18,8 @@ public class User {
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private List<Ad> ads;
 
     public User() {};
 
@@ -26,7 +28,9 @@ public class User {
         this.password = password;
         this.email = email;
     }
-
+    public List<Ad> getAds() {
+        return ads;
+    }
     public long getId() {
         return id;
     }

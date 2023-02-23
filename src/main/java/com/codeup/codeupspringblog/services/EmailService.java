@@ -1,13 +1,14 @@
 package com.codeup.codeupspringblog.services;
 
 import com.codeup.codeupspringblog.models.Ad;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("mailService")
 public class EmailService {
 
     @Autowired
@@ -32,4 +33,7 @@ public class EmailService {
         }
     }
 }
+
+
+
 

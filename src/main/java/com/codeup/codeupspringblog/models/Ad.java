@@ -30,6 +30,17 @@ public class Ad {
     )
     private List<AdCategory> categories;
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    @ManyToOne
+    private User owner;
+
     public Ad(){};
 
     public Ad(String title, String description) {
