@@ -1,5 +1,4 @@
 package com.codeup.codeupspringblog;
-
 import com.codeup.codeupspringblog.services.UserDetailsLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,8 +30,6 @@ public class SecurityConfiguration {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -45,32 +42,20 @@ public class SecurityConfiguration {
                 /* Logout configuration */
                 .and()
                 .logout()
-                .logoutSuccessUrl("/") // append a query string value
+                .logoutSuccessUrl("/")
                 /* Pages that can be viewed without having to log in */
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/ads") // anyone can see the home and the ads pages
+                .requestMatchers("/", "/ads", "/sign-up") // anyone can see the home and the ads pages
                 .permitAll()
                 /* Pages that require authentication */
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/posts/create", // only authenticated users can create ads
-                        "/ads/{id}/edit", // only authenticated users can edit ads
-                        "/ads/create"
+                        "/ads/create", // only authenticated users can create ads
+                        "/ads/{id}/edit" // only authenticated users can edit ads
                 )
-                .authenticated()
-        ;
-//        return http.build();
-//        http
-//                .csrf().disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/posts/**").authenticated()
-//                .anyRequest().permitAll()
-//                .and()
-//                .httpBasic()
-//                .and()
-//                .formLogin();
+                .authenticated();
         return http.build();
     }
 }

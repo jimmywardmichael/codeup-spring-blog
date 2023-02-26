@@ -24,17 +24,17 @@ public class User {
 
     public User() {};
 
+    public User(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
     public User(User copy) {
         id = copy.id;
         email = copy.email;
         username = copy.username;
         password = copy.password;
-    }
-
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
     }
 
     public List<Ad> getAds() {
