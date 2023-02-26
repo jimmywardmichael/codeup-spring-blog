@@ -4,6 +4,7 @@ import com.codeup.codeupspringblog.models.Post;
 import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 
 @Service("EmailService")
@@ -33,7 +34,7 @@ public class EmailService {
             request.setBody(mail.build());
             Response response = sg.api(request);
             return response.getBody();
-        } catch (IOException ex) {
+        } catch(IOException ex) {
             return ex.getMessage();
         }
     }

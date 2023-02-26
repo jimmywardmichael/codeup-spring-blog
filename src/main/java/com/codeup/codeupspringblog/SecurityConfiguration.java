@@ -25,44 +25,52 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+//Checks for hashed passwords, springs handles this with the @bean
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                /* Login Configuration */
-                // We want to use our own log in form
+                .csrf().disable()
+                /* Login configuration */
                 .formLogin()
-                // The login form I want to use is served at /login
                 .loginPage("/login")
-                // After successful login, redirect to /ads
-                .defaultSuccessUrl("/ads")
-                // Allow all users to visit /login
-                .permitAll()
-                /* Logout Configuration */
+                .defaultSuccessUrl("/ads") // user's home page, it can be any URL
+                .permitAll() // Anyone can go to the login page
+                /* Logout configuration */
                 .and()
-                // provide a logout method
                 .logout()
-                // when a post request is made to /logout, redirect to /login?logout (login page)
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/") // append a query string value
+                /* Pages that can be viewed without having to log in */
                 .and()
-                /* Pages that can be viewed without loggin in */
-                // allow requests to the following:
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/ads") // anyone can visit the home page and the ads index page.
+                .requestMatchers("/", "/ads") // anyone can see the home and the ads pages
                 .permitAll()
-                /* Pages that need a logged in user */
+                /* Pages that require authentication */
                 .and()
-                // allow requests to the following:
                 .authorizeHttpRequests()
-                .requestMatchers("/ads/create", "/ads/{id}/edit", "/ads/{id}/delete")
-                .authenticated();
-
-        // build the security filter that we just configured above.
+                .requestMatchers(
+                        "/posts/create", // only authenticated users can create ads
+                        "/ads/{id}/edit", // only authenticated users can edit ads
+                        "/ads/create"
+                )
+                .authenticated()
+        ;
+//        return http.build();
+//        http
+//                .csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/posts/**").authenticated()
+//                .anyRequest().permitAll()
+//                .and()
+//                .httpBasic()
+//                .and()
+//                .formLogin();
         return http.build();
     }
 }
