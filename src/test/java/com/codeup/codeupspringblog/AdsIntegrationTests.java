@@ -116,4 +116,45 @@ public class AdsIntegrationTests {
                 .andExpect(content().string(containsString(existingAd.getTitle())));
     }
 
+    @Test
+    public void testEditAd() throws Exception {
+        // Gets the first Ad for tests purposes
+        Ad existingAd = adsDao.findAll().get(0);
+
+        // Makes a Post request to /ads/{id}/edit and expect a redirection to the Ad show page
+        this.mvc.perform(
+                        post("/ads/" + existingAd.getId() + "/edit").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("title", "edited title")
+                                .param("description", "edited description"))
+                .andExpect(status().is3xxRedirection());
+
+        // Makes a GET request to /ads/{id} and expect a redirection to the Ad show page
+        this.mvc.perform(get("/ads/" + existingAd.getId()))
+                .andExpect(status().isOk())
+                // Test the dynamic content of the page
+                .andExpect(content().string(containsString("edited title")))
+                .andExpect(content().string(containsString("edited description")));
+    }
+    @Test
+    public void testDeleteAd() throws Exception {
+        // Creates a test Ad to be deleted
+        this.mvc.perform(
+                        post("/ads/create").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("title", "ad to be deleted")
+                                .param("description", "won't last long"))
+                .andExpect(status().is3xxRedirection());
+
+        // Get the recent Ad that matches the title
+        Ad existingAd = adsDao.findByTitle("ad to be deleted");
+
+        // Makes a Post request to /ads/{id}/delete and expect a redirection to the Ads index
+        this.mvc.perform(
+                        post("/ads/" + existingAd.getId() + "/delete").with(csrf())
+                                .session((MockHttpSession) httpSession)
+                                .param("id", String.valueOf(existingAd.getId())))
+                .andExpect(status().is3xxRedirection());
+    }
+
 }
