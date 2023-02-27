@@ -2,9 +2,11 @@ package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Ad;
 import com.codeup.codeupspringblog.models.AdImage;
+import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.AdRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
 import com.codeup.codeupspringblog.services.EmailService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,20 +68,34 @@ public class AdController {
 
     @PostMapping(path = "/ads/create")
     public String adCreateSubmit(@ModelAttribute Ad ad){
-        ad.setOwner(userDao.findById(1L).get());
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ad.setOwner(loggedInUser);
         adDao.save(ad);
         return "redirect:/ads";
     }
 
     @GetMapping("/ads/{id}/edit")
     public String showEditForm(@PathVariable long id, Model model) {
-        model.addAttribute("ad", adDao.findById(id).get());
-        return "ads/edit";
+        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // if the logged in user is not the owner of the ad, redirect to /ads
+        if(loggedInUser.getId() != adDao.findById(id).get().getOwner().getId()) {
+            return "redirect:/ads";
+        } else {
+            // only the owner of the ad can edit the ad
+            model.addAttribute("ad", adDao.findById(id).get());
+            return "ads/edit";
+        }
     }
 
     @PostMapping("/ads/{id}/edit")
     public String editAd(@PathVariable long id, @ModelAttribute Ad ad) {
         adDao.save(ad);
+        return "redirect:/ads";
+    }
+
+    @PostMapping("/ads/{id}/delete")
+    public String deleteAd(@PathVariable long id) {
+        adDao.deleteById(id);
         return "redirect:/ads";
     }
 
