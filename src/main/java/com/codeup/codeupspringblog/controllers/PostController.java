@@ -1,19 +1,14 @@
 package com.codeup.codeupspringblog.controllers;
 
 import com.codeup.codeupspringblog.models.Post;
-import com.codeup.codeupspringblog.models.User;
-import com.codeup.codeupspringblog.repositories.PostRepository;
-import com.codeup.codeupspringblog.repositories.UserRepository;
 import com.codeup.codeupspringblog.services.EmailService;
 import com.codeup.codeupspringblog.services.PostDaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
-
 @Controller
 public class PostController {
-
     private final PostDaoService postService;
     private final EmailService emailService;
 
@@ -42,6 +37,10 @@ public class PostController {
 
     @PostMapping(path = "/posts/create")
     public String postCreateSubmit(@ModelAttribute Post post){
+        System.out.println(post.getId());
+        System.out.println(post.getTitle());
+        System.out.println(post.getBody());
+        System.out.println(post.getUser());
         postService.savePost(post);
         emailService.sendTextEmail(post);
         return "redirect:/posts";

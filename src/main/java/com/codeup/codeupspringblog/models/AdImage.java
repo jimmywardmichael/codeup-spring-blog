@@ -1,5 +1,6 @@
 package com.codeup.codeupspringblog.models;
 
+
 import jakarta.persistence.*;
 
 @Entity

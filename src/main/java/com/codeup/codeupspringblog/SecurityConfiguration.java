@@ -24,7 +24,7 @@ public class SecurityConfiguration {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//Checks for hashed passwords, springs handles this with the @bean
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -51,10 +51,15 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/posts/**", // only authenticated users can create ads
-                        "/ads/**" // only authenticated users can edit ads
+                        "/posts/create", // only authenticated users can create ads
+                        "/ads/create", // only authenticated users can edit ads
+                        "/ads/{id}/edit",
+                        "/ads/{id}",
+                        "/posts/{id}",
+                        "/posts/{id}/edit"
                 )
-                .authenticated();
+                .authenticated()
+        ;
         return http.build();
     }
 }
